@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terrain UI Demo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wdth,wght@50..125,100..900&family=Noto+Sans+SC:wght@400;700;900&display=swap">
+<link rel="stylesheet" href="../assets/terrain.css">
+<style>
+  body { margin: 0; }
+  .page { position: relative; z-index: 1; max-width: 1040px; margin: 0 auto; padding: 32px 16px 96px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 48px; }
+  .split { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 32px; align-items: start; }
+  .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; align-items: start; }
+  @media (max-width: 720px) { .split, .two { grid-template-columns: minmax(0, 1fr); } }
+  h1 { margin: 0; font-size: clamp(32px, 6vw, 56px); font-weight: 800; font-stretch: 112%; line-height: 1; }
+  h2 { margin: 0 0 16px; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; }
+</style>
+</head>
+<body class="tu">
+<canvas class="tu-contours" id="contours" aria-hidden="true"></canvas>
+
+<main class="page">
+  <header class="top">
+    <div>
+      <p class="tu-crumb tu-label">// <a href="#">Terrain UI</a> / Components</p>
+      <h1>Components</h1>
+    </div>
+    <button class="tu-btn tu-btn--pill tu-label" type="button" id="theme">Dark mode</button>
+  </header>
+
+  <section class="split">
+    <nav aria-label="Sections">
+      <h2 class="tu-label">// List</h2>
+      <ul class="tu-list tu-label">
+        <li><a href="#" aria-current="page"><span class="tu-num">01</span>Overview</a></li>
+        <li><a href="#"><span class="tu-num">02</span>Records</a></li>
+        <li><a href="#"><span class="tu-num">03</span>Settings</a></li>
+      </ul>
+    </nav>
+    <div class="stack">
+      <div>
+        <h2 class="tu-label">// Tabs</h2>
+        <div class="tu-tabs tu-label" role="tablist" id="tabs">
+          <button class="tu-tab" role="tab" aria-selected="true">Daily</button>
+          <button class="tu-tab" role="tab" aria-selected="false">Weekly</button>
+          <button class="tu-tab" role="tab" aria-selected="false">Archive</button>
+        </div>
+      </div>
+      <div>
+        <h2 class="tu-label">// Buttons</h2>
+        <div class="row tu-label">
+          <button class="tu-btn" type="button" id="open-dialog">Save changes</button>
+          <a class="tu-btn tu-btn--pill" href="#">View on GitHub <span class="tu-btn__icon" aria-hidden="true">↗</span></a>
+          <button class="tu-btn tu-btn--pill" type="button" id="show-toast">Show toast</button>
+          <button class="tu-btn tu-btn--pill" type="button" aria-label="Previous page">‹ <kbd class="tu-kbd">←</kbd></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="tu-label">// Table</h2>
+    <div class="tu-table-wrap">
+      <table class="tu-table" style="min-width: 560px">
+        <thead><tr><th>No.</th><th>Item</th><th>Updated</th><th class="tu-right">Count</th></tr></thead>
+        <tbody>
+          <tr><td class="tu-num">01</td><td>Example row one</td><td class="tu-num">2026.11.03</td><td class="tu-right tu-num">12 / 40</td></tr>
+          <tr><td class="tu-num">02</td><td>Example row two</td><td class="tu-num">2026.11.02</td><td class="tu-right tu-num">7 / 40</td></tr>
+          <tr><td class="tu-num">03</td><td>Example row three</td><td class="tu-num">2026.10.30</td><td class="tu-right tu-num">40 / 40</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="two">
+    <div class="tu-panel stack">
+      <h2 class="tu-label" style="margin:0">// Form</h2>
+      <div class="tu-field">
+        <label class="tu-label" for="zip">ZIP code</label>
+        <input class="tu-input tu-num" id="zip" value="01002">
+        <p class="tu-hint">Five digits. Stores near this code are checked.</p>
+      </div>
+      <div class="tu-field">
+        <label class="tu-label" for="interval">Check every (minutes)</label>
+        <input class="tu-input tu-num" id="interval" value="0" aria-invalid="true" aria-describedby="interval-err">
+        <p class="tu-error" id="interval-err">Enter a number from 1 to 60.</p>
+      </div>
+      <label class="tu-switch tu-label"><input type="checkbox" checked><span class="tu-switch__track"></span>Send notifications</label>
+      <label class="tu-switch tu-label"><input type="checkbox"><span class="tu-switch__track"></span>Play a sound</label>
+    </div>
+    <div class="stack">
+      <div>
+        <h2 class="tu-label">// Fields</h2>
+        <ul class="tu-fields tu-label tu-num">
+          <li>Projects<span class="tu-sep">│</span><b>01 / 04</b></li>
+          <li>Updated<span class="tu-sep">│</span><b>2026.11.03</b></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="tu-label">// Loading</h2>
+        <div class="stack" style="gap:16px">
+          <div class="tu-progress tu-label tu-num" style="--tu-value: 62%"><div class="tu-progress__bar"><i></i></div><span>Syncing<span class="tu-sep">│</span><b>62%</b></span></div>
+          <div class="tu-progress tu-progress--busy tu-label"><div class="tu-progress__bar"><i></i></div><span>Now loading</span></div>
+        </div>
+      </div>
+      <div>
+        <h2 class="tu-label">// Empty</h2>
+        <div class="tu-empty">
+          <p>No records yet. Each restock will appear here as one row with its store and time.</p>
+          <button class="tu-btn tu-label" type="button">Start watching</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<dialog class="tu-dialog" id="dialog" aria-labelledby="dialog-title">
+  <div class="tu-dialog__body">
+    <p class="tu-crumb tu-label" style="margin:0">// Settings</p>
+    <h2 class="tu-dialog__title" id="dialog-title">Save these changes?</h2>
+    <p style="margin:0">The new ZIP code and interval take effect on the next check.</p>
+  </div>
+  <form method="dialog" class="tu-dialog__actions tu-label">
+    <button class="tu-btn tu-btn--pill" value="cancel">Cancel</button>
+    <button class="tu-btn" value="ok">Save</button>
+  </form>
+</dialog>
+
+<div class="tu-toast tu-label" id="toast" role="status" hidden>Settings saved</div>
+
+<script src="../assets/contours.js"></script>
+<script>
+  TerrainContours.mount(document.getElementById('contours'), { seed: 1017 });
+  document.getElementById('tabs').addEventListener('click', function (e) {
+    var t = e.target.closest('.tu-tab'); if (!t) return;
+    this.querySelectorAll('.tu-tab').forEach(function (b) { b.setAttribute('aria-selected', String(b === t)); });
+  });
+  var dialog = document.getElementById('dialog');
+  document.getElementById('open-dialog').addEventListener('click', function () { dialog.showModal(); });
+  var toast = document.getElementById('toast'), tt = 0;
+  function showToast() { toast.hidden = false; clearTimeout(tt); tt = setTimeout(function () { toast.hidden = true; }, 2000); }
+  document.getElementById('show-toast').addEventListener('click', showToast);
+  dialog.addEventListener('close', function () { if (dialog.returnValue === 'ok') showToast(); });
+  var root = document.documentElement, themeBtn = document.getElementById('theme');
+  function dark() { var t = root.getAttribute('data-theme'); return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches; }
+  function paint() { themeBtn.textContent = dark() ? 'Light mode' : 'Dark mode'; }
+  themeBtn.addEventListener('click', function () { root.setAttribute('data-theme', dark() ? 'light' : 'dark'); paint(); });
+  paint();
+  var q = new URLSearchParams(location.search);
+  if (q.get('dialog')) dialog.showModal();
+  if (q.get('toast')) { toast.hidden = false; }
+</script>
+</body>
+</html>
