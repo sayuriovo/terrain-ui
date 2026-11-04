@@ -175,6 +175,10 @@
 .tu-switch input:checked + .tu-switch__track::after { transform: translateX(22px); }
 .tu-switch input:focus-visible + .tu-switch__track { outline: 2px solid var(--tu-ink); outline-offset: 3px; }
 
+/* Browsers reset text-transform on <button>; let buttons take the label style from their parent.
+   :where() keeps this at zero specificity, so a .tu-label class on the button itself still wins. */
+:where(button.tu-btn, button.tu-tab) { text-transform: inherit; letter-spacing: inherit; }
+
 /* ---------- dialog ---------- */
 .tu-dialog {
   width: min(480px, calc(100vw - 32px)); padding: 0; border: 0; background: var(--tu-panel); color: var(--tu-ink);
@@ -184,6 +188,7 @@
 .tu-dialog__body { display: grid; gap: 16px; padding: 24px; }
 .tu-dialog__title { margin: 0; font-size: 24px; font-weight: 800; font-stretch: 112%; }
 .tu-dialog__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; padding: 16px 24px; background: var(--tu-gray); }
+.tu-dialog__actions .tu-btn--pill { background: var(--tu-panel); box-shadow: inset 0 0 0 1px var(--tu-line); }
 @keyframes tu-sharpen { from { opacity: 0; filter: blur(8px); } to { opacity: 1; filter: none; } }
 
 /* ---------- toast ---------- */

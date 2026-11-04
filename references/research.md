@@ -87,6 +87,10 @@ Letter spacing: the official site's wide labels (Novecento Sans Wide) compute to
 | 1 | Same | A literal `</script>` in a `contours.js` comment cut the script short when inlined | Rewrote the comment; added the "Delivering a single HTML file" section |
 | 1 | Same | The page included facts from the project README that the prompt did not give. They matched the README, but the support scope was stated more firmly than the README does | Extended rule 5 to text: use only given information or project docs, keep their scope, and use a placeholder when there is no source |
 | 1 | Same | The footer separated fields with a middle dot `·` | Not changed; the rules already say to use a vertical bar. Watching for a repeat |
+| 2 | A Chrome extension's Status, History and Settings page, a Workbench page, built by Claude | Page type, list selection, tabs, pill buttons, table, form, switch, dialog and toast all applied without overrides | None needed |
+| 2 | Same | `<button>` elements did not take the uppercase label style, because browsers reset `text-transform` on buttons; links styled as buttons did | Added a zero-specificity rule so buttons inherit the label style |
+| 2 | Same | In the dialog footer, a pill button had the same gray as the footer and read as plain text | Pill buttons in the dialog footer use the panel color with a thin outline |
+| 2 | Same | No middle dots this round | Footer issue from round 1 did not repeat |
 
 ## 7. How this differs from a similar skill
 
